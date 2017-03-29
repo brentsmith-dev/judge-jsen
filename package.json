@@ -8,7 +8,8 @@
 		"express": "^4.15.0",
 		"json-schema-ref-parser": "2.2.0",
 		"jsen": "0.6.4",
-		"request-promise-native": "1.0.3"
+		"request-promise-native": "1.0.3",
+		"request": "2.81.0"
 	},
 	"main": "index.js",
 	"keywords": [

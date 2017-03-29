@@ -1,9 +1,8 @@
 var express = require('express')
 var bodyParser = require('body-parser');
 var rpn = require('request-promise-native');
-var fs = require('fs');
-var app = express();
 var jsen = require('jsen');
+var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
