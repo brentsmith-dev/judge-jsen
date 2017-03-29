@@ -62,5 +62,5 @@ app.options('/test', function( req, res) {
 });
 
 app.listen(port, function () {
-	console.log('Example app listening on port 3000!')
+	console.log('Example app listening on port ' + port)
 })
