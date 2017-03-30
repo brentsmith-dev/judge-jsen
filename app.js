@@ -1,7 +1,8 @@
 var express = require('express')
 var bodyParser = require('body-parser');
-var rpn = require('request-promise-native');
+var request = require('request');
 var jsen = require('jsen');
+
 var app = express();
 
 // set the port of our application
@@ -11,47 +12,50 @@ var port = process.env.PORT || 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+function validateData(data, res, err, schemaResponse) {
+	if (err) {
+		console.log('unable to fetch Schema')
+		res.status(500).send('Unable to fetch Schema');
+		return
+	}
+	var schema = schemaResponse.body;
+	// This validates that the schema being used is itself valid
+	var hyperSchemaValidator = jsen({"$ref": "http://json-schema.org/draft-04/schema#"});
+	var isSchemaValid = hyperSchemaValidator(schema);
+	if (!isSchemaValid) {
+		console.log('invalid schema');
+		res.status(500).send('Provided schema is invalid');
+	} else {
+		console.log('valid schema');
+		// This validates the data against the provided schema
+		var schemaValidator = jsen(schema);
+		console.log('checking data');
+		var isDataValid = schemaValidator(data);
+		if (isDataValid) {
+			console.log('data conforms to provided schema');
+			res.send('data conforms to provided schema');
+		} else {
+			console.log('data does not conform to provided schema'),
+			console.log('error: ', schemaValidator.errors);
+			res.status(400).send('data does not conform to provided schema: ');
+		}
+	}
+}
+
 app.get('/', function (req, res) {
 	res.send('Welcome to my court!')
 })
 
 app.post('/test', function (req, res) {
-	console.dir(JSON.stringify(req.body))
+	//console.dir(JSON.stringify(req.body))
 	var schemaUrl = req.body.$schema;
 	console.log('$schema: ' + schemaUrl)
-
 	var options = {
 		uri: schemaUrl,
 		json: true
 	};
 	
-	rpn(options)
-		.then(function(schema) {
-			// This validates that the schema being used is itself valid
-			var hyperSchemaValidator = jsen({"$ref": "http://json-schema.org/draft-04/schema#"});
-			var isSchemaValid = hyperSchemaValidator(schema);
-			if (!isSchemaValid) {
-				console.log('invalid schema');
-				res.status(500).send('Provided schema invalid');
-			} else {
-				console.log('valid schema');
-				// This validates the data against the provided schema
-				var schemaValidator = jsen(schema);
-				var isDataValid = schemaValidator(req.body);
-				if (isDataValid) {
-					console.log('data conforms to provided schema');
-					res.send('data conforms to provided schema');
-				} else {
-					console.log('data does not conform to provided schema'),
-					console.log('error: ', validateData.errors);
-					res.status(400).send('data does not conform to provided schema: ');
-				}
-			}
-		}.bind(this))
-		.catch(function (err) {
-			console.log('unable to fetch Schema')
-			res.status(500).send('Unable to fetch Schema');
-		}.bind(this));
+	request(options, validateData.bind(null, req.body, res));
 });
 
 app.options('/test', function( req, res) {
