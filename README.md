@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/statuswoe/judge-jesn.svg?branch=master)](https://travis-ci.org/statuswoe/judge-jesn)
 
 # Judge Jesn
-judge-jsen is a tiny service intended to allow easy validation of json payloads using a provided json schema.
+judge-jsen is a tiny service intended to allow easy validation of JSON payloads using a provided JSON schema.
 It uses the excellent [jsen] validation tool.
 
 [jsen]: https://github.com/bugventure/jsen
@@ -52,11 +52,11 @@ to start the service. Then you should be able to send POST requests to http://lo
     
     curl -H "Accept: application/json" -H "Content-Type: application/json" --data-binary '{"$schema": "https://raw.githubusercontent.com/statuswoe/judge-jesn/master/demo/demo.schema.json", "testString": "this is a test", "testInt": 12345}' --compressed "http://localhost:8000/validate"
     
-responses to POST requests with valid schemas should look like  
+Responses to POST requests with valid schemas and a conforming JSON object should return a 200 response with a body similar to  
     
     data conforms to provided schema
     
-or  
+Responses to POST requests with valid schemas but a non-conforming JSON object should return a 400 response with a body similar to
     
     data does not conform to provided schema: [{"path":"testInt","keyword":"type"}]
     
@@ -67,3 +67,7 @@ An instance of this service may be available on [heroku] which can be used as a 
 
     curl -H "Accept: application/json" -H "Content-Type: application/json" --data-binary '{"$schema": "https://raw.githubusercontent.com/statuswoe/judge-jesn/master/demo/demo.schema.json", "testString": "this is a test", "testInt": 12345}' --compressed "https://judge-jsen.herokuapp.com/validate"
 [heroku]: https://judge-jsen.herokuapp.com
+
+## Notes
+Currently the service only supports dereferenced JSON schemas
+This project is still in the early stages of development
