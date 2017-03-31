@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "testString": {
+      "type": "string"
+    },
+    "testInt": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "testString",
+    "testInt"
+  ]
+}
