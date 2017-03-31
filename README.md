@@ -69,5 +69,5 @@ An instance of this service may be available on [heroku] which can be used as a 
 [heroku]: https://judge-jsen.herokuapp.com
 
 ## Notes
-Currently the service only supports dereferenced JSON schemas
+Currently the service only supports dereferenced JSON schemas  
 This project is still in the early stages of development
