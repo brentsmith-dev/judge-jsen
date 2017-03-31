@@ -1,20 +1,27 @@
 {
-  "name": "sniff-test",
-  "version": "0.0.0",
+  "name": "judge-jsen",
+  "version": "0.1.0",
   "description": "json schema validation service",
   "author": "brent.smith@gmail.com",
-  "dependencies": {
-    "body-parser": "1.17.0",
-    "express": "^4.15.0",
-    "json-schema-ref-parser": "2.2.0",
-    "jsen": "0.6.4",
-    "request": "2.81.0"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/statuswoe/judge-jesn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/statuswoe/judge-jesn/issues"
   },
   "keywords": [
     "json-schema"
   ],
-  "license": "ISC",
+  "dependencies": {
+    "body-parser": "1.17.0",
+    "express": "4.15.2",
+    "json-schema-ref-parser": "2.2.0",
+    "jsen": "0.6.4",
+    "request": "2.81.0"
+  },
   "devDependencies": {
-    "jasmine": "^2.5.3"
+    "jasmine": "2.5.3"
   }
 }

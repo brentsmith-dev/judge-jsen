@@ -43,7 +43,7 @@ function validateData(data, schema, response) {
 	} else {
 		console.log('data does not conform to provided schema'),
 		console.log('error: ', schemaValidator.errors);
-		response.status(400).send('data does not conform to provided schema: ');
+		response.status(400).send('data does not conform to provided schema: ' + JSON.stringify(schemaValidator.errors));
 	}
 }
 
